@@ -1,0 +1,39 @@
+{
+    "name": "garbuzivan/laravel-auth-api",
+    "description": "Laravel API auth",
+    "type": "library",
+    "require": {
+        "zebrains/laravel-data-verificator": "^0.1.1"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^8.5",
+        "mockery/mockery": ">=1.3"
+    },
+    "authors": [
+        {
+            "name": "Garbuz Ivan",
+            "email": "garbuzivan90@ya.ru"
+        }
+    ],
+    "minimum-stability": "stable",
+    "autoload": {
+        "psr-4": {
+            "GarbuzIvan\\LaravelAuthApi\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "GarbuzIvan\\LaravelAuthApi\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "test": "phpunit"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "GarbuzIvan\\LaravelAuthApi\\LaravelAuthApiServiceProvider"
+            ]
+        }
+    }
+}
