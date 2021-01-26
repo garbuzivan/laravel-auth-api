@@ -6,7 +6,7 @@ namespace GarbuzIvan\LaravelAuthApi;
 
 use Illuminate\Support\ServiceProvider;
 
-class ImageManagerServiceProvider extends ServiceProvider
+class LaravelAuthApiServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap the application services...
