@@ -100,4 +100,14 @@ class AuthStatus
             return null;
         }
     }
+
+    /**
+     * Set error info
+     *
+     * @param string $error
+     */
+    public function setError(string $error): void
+    {
+        $this->error = $error;
+    }
 }
