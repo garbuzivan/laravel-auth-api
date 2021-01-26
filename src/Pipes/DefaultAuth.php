@@ -14,7 +14,7 @@ class DefaultAuth extends AbstractPipes
      * @param AuthStatus $auth
      * @return mixed
      */
-    public function auth(AuthStatus $auth)
+    public function auth(AuthStatus $auth): AuthStatus
     {
         $arg = $auth->getArg();
         return $auth;
