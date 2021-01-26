@@ -13,7 +13,7 @@
 <pre>
 $LaravelAuthApi = new LaravelAuthApi($argAuthArray);
 $result = $LaravelAuthApi->auth();
-if($result->isSuccess()){
+if ($result->isSuccess()){
     dd($result->getToken());
 } else {
     dd($result->getError());
