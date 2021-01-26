@@ -92,9 +92,9 @@ class AuthStatus
      */
     public function getError(): ?string
     {
-        if(!is_null($this->error)){
+        if (!is_null($this->error)) {
             return $this->error;
-        } elseif(is_null($this->token)){
+        } elseif (is_null($this->token)) {
             return 'Unknown error. Token cannot be empty';
         } else {
             return null;

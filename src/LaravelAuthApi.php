@@ -6,6 +6,7 @@ namespace GarbuzIvan\LaravelAuthApi;
 
 use GarbuzIvan\ImageManager\Configuration;
 use GarbuzIvan\LaravelAuthApi\Models\AuthStatus;
+use GarbuzIvan\LaravelAuthApi\Pipes\AbstractPipes;
 use Illuminate\Pipeline\Pipeline;
 
 class LaravelAuthApi
@@ -13,7 +14,7 @@ class LaravelAuthApi
     /**
      * @var Configuration $config
      */
-    protected $config;
+    protected Configuration $config;
 
     /**
      * Configuration constructor.
@@ -24,7 +25,9 @@ class LaravelAuthApi
         if (is_null($config)) {
             $config = new Configuration();
         }
-        $this->config = $config;
+        if ($config instanceof Configuration) {
+            $this->config = $config;
+        }
     }
 
     public function auth(array $auth = null): AuthStatus
