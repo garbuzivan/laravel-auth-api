@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace GarbuzIvan\LaravelAuthApi;
 
 use GarbuzIvan\ImageManager\Configuration;
-use GarbuzIvan\LaravelAuthApi\Models\AuthStatus;
+use GarbuzIvan\LaravelAuthApi\AuthStatus;
 use Illuminate\Pipeline\Pipeline;
 
 class LaravelAuthApi

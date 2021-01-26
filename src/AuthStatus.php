@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace GarbuzIvan\LaravelAuthApi\Models;
+namespace GarbuzIvan\LaravelAuthApi;
 
 class AuthStatus
 {

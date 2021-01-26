@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace GarbuzIvan\LaravelAuthApi\Pipes;
 
 use Closure;
-use GarbuzIvan\LaravelAuthApi\Models\AuthStatus;
+use GarbuzIvan\LaravelAuthApi\AuthStatus;
 
 abstract class AbstractPipes
 {

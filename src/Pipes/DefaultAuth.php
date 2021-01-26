@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace GarbuzIvan\LaravelAuthApi\Pipes;
 
-use GarbuzIvan\LaravelAuthApi\Models\AuthStatus;
+use GarbuzIvan\LaravelAuthApi\AuthStatus;
 
 class DefaultAuth extends AbstractPipes
 {
@@ -16,7 +16,36 @@ class DefaultAuth extends AbstractPipes
      */
     public function auth(AuthStatus $auth): AuthStatus
     {
-        $arg = $auth->getArg();
+        $auth = $this->authByEmailStep2($auth);
+        $auth = $this->authByEmailStep1($auth);
+        $auth = $this->authByEmailAndPassword($auth);
+        return $auth;
+    }
+
+    /**
+     * @param AuthStatus $auth
+     * @return AuthStatus
+     */
+    public function authByEmailAndPassword(AuthStatus $auth): AuthStatus
+    {
+        return $auth;
+    }
+
+    /**
+     * @param AuthStatus $auth
+     * @return AuthStatus
+     */
+    public function authByEmailStep1(AuthStatus $auth): AuthStatus
+    {
+        return $auth;
+    }
+
+    /**
+     * @param AuthStatus $auth
+     * @return AuthStatus
+     */
+    public function authByEmailStep2(AuthStatus $auth): AuthStatus
+    {
         return $auth;
     }
 }
