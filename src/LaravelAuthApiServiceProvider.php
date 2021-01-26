@@ -15,7 +15,11 @@ class ImageManagerServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        $configPath = $this->configPath();
 
+        $this->publishes([
+            $configPath . '/laravel-auth-api.php' => $this->publishPath('laravel-auth-api.php'),
+        ], 'config');
     }
 
     /**
@@ -26,5 +30,26 @@ class ImageManagerServiceProvider extends ServiceProvider
     public function register()
     {
 
+    }
+
+    /**
+     * @return string
+     */
+    protected function configPath(): string
+    {
+        return __DIR__ . '/../config';
+    }
+
+    /**
+     * @param $configFile
+     * @return string
+     */
+    protected function publishPath($configFile): string
+    {
+        if (function_exists('config_path')) {
+            return config_path($configFile);
+        } else {
+            return base_path('config/' . $configFile);
+        }
     }
 }
