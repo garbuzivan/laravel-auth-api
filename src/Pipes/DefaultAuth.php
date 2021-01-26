@@ -16,7 +16,6 @@ class DefaultAuth extends AbstractPipes
      */
     public function auth(AuthStatus $auth): AuthStatus
     {
-        dd($auth);
         $auth = $this->authByEmailStep2($auth);
         $auth = $this->authByEmailStep1($auth);
         $auth = $this->authByEmailAndPassword($auth);
@@ -38,8 +37,7 @@ class DefaultAuth extends AbstractPipes
      */
     public function authByEmailStep1(AuthStatus $auth): AuthStatus
     {
-        $auth = $auth->setToken('123321');
-        dd($auth);
+        //$auth->setToken('123321');
         return $auth;
     }
 
