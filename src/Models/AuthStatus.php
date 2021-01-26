@@ -21,6 +21,20 @@ class AuthStatus
     protected array $status = [];
 
     /**
+     * Token code
+     *
+     * @var ?string
+     */
+    protected ?string $token = null;
+
+    /**
+     * Error
+     *
+     * @var ?string
+     */
+    protected ?string $error = null;
+
+    /**
      * Configuration constructor.
      * @param array|null $auth
      */
@@ -49,5 +63,41 @@ class AuthStatus
     public function getArg(): array
     {
         return $this->arg;
+    }
+
+    /**
+     * isSuccess auth
+     *
+     * @return bool
+     */
+    public function isSuccess(): bool
+    {
+        return is_null($this->error) && !is_null($this->token);
+    }
+
+    /**
+     * Get token code
+     *
+     * @return string
+     */
+    public function getToken(): ?string
+    {
+        return $this->token;
+    }
+
+    /**
+     * Get error
+     *
+     * @return string
+     */
+    public function getError(): ?string
+    {
+        if(!is_null($this->error)){
+            return $this->error;
+        } elseif(is_null($this->token)){
+            return 'Unknown error. Token cannot be empty';
+        } else {
+            return null;
+        }
     }
 }
