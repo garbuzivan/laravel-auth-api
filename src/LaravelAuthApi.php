@@ -20,7 +20,7 @@ class LaravelAuthApi
      * Configuration constructor.
      * @param Configuration|null $config
      */
-    public function __construct(Configuration $config = null)
+    public function __construct(Configuration $config)
     {
         if (is_null($config)) {
             $config = new Configuration();

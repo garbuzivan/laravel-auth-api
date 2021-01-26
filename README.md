@@ -11,8 +11,8 @@
 ## Пример использования
 
 <pre>
-$LaravelAuthApi = new LaravelAuthApi($argAuthArray);
-$result = $LaravelAuthApi->auth();
+$LaravelAuthApi = new LaravelAuthApi();
+$result = $LaravelAuthApi->auth($argAuthArray);
 if ($result->isSuccess()){
     dd($result->getToken());
 } else {
