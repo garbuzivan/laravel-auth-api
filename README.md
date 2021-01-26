@@ -15,7 +15,7 @@ $LaravelAuthApi = new LaravelAuthApi();
 $result = $LaravelAuthApi->auth();
 if($result->isSuccess()){
     dd($result->getToken());
-]} else {
+} else {
     dd($result->getError());
 }
 </pre>
