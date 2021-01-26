@@ -14,7 +14,7 @@ abstract class AbstractPipes
      * @param Closure $next
      * @return mixed
      */
-    abstract public function handler(AuthStatus $auth, Closure $next)
+    public function handler(AuthStatus $auth, Closure $next)
     {
         // If the authorization was successful earlier - skip
         if($auth->isSuccess()){
