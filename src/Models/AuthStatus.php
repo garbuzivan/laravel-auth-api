@@ -40,7 +40,9 @@ class AuthStatus
      */
     public function __construct(array $auth = null)
     {
-        $this->setArg($auth);
+        if (!is_null($auth)) {
+            $this->setArg($auth);
+        }
     }
 
     /**
