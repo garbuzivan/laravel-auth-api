@@ -88,6 +88,17 @@ class AuthStatus
     }
 
     /**
+     * Set token code
+     *
+     * @param string|null $string
+     * @return void
+     */
+    public function setToken(string $string = null): void
+    {
+        $this->token = $string;
+    }
+
+    /**
      * Get error
      *
      * @return string

@@ -37,6 +37,7 @@ class DefaultAuth extends AbstractPipes
      */
     public function authByEmailStep1(AuthStatus $auth): AuthStatus
     {
+        $auth->setToken('123321');
         return $auth;
     }
 
