@@ -30,6 +30,12 @@ class LaravelAuthApi
         }
     }
 
+    /**
+     * The method takes an array of arguments and passes through the pipeline array of handlers
+     *
+     * @param array|null $auth
+     * @return AuthStatus
+     */
     public function auth(array $auth = null): AuthStatus
     {
         $AuthStatus = new AuthStatus($auth);
@@ -40,13 +46,4 @@ class LaravelAuthApi
             ->thenReturn();
     }
 
-    public function newToken(array $auth = null): bool
-    {
-
-    }
-
-    public function getToken(array $auth = null): bool
-    {
-
-    }
 }
