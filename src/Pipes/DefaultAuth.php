@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace GarbuzIvan\LaravelAuthApi\Pipes;
 
 use GarbuzIvan\LaravelAuthApi\AuthStatus;
+use GarbuzIvan\LaravelAuthApi\ExceptionCode;
+use Illuminate\Support\Facades\Auth;
 
 class DefaultAuth extends AbstractPipes
 {
@@ -16,9 +18,28 @@ class DefaultAuth extends AbstractPipes
      */
     public function auth(AuthStatus $auth): AuthStatus
     {
-        $auth = $this->authByEmailStep2($auth);
-        $auth = $this->authByEmailStep1($auth);
-        $auth = $this->authByEmailAndPassword($auth);
+        $arg = $auth->getArg();
+        if (isset($arg['email']) && isset($arg['password'])) {
+            if (Auth::attempt([
+                'email' => $arg['email'],
+                'password' => $arg['password']
+            ])) {
+                if (!isset(Auth::user()->api_token)) {
+                    $auth->setError(ExceptionCode::$ERROR_DONT_CREATE_API_TOKIN_IN_DB);
+                }
+                $token = Auth::user()->api_token;
+                if (is_null($token)) {
+                    $auth->setError(ExceptionCode::$ERROR_DONT_CREATE_API_TOKIN_IN_DB);
+                }
+                $auth->setToken($token);
+            } else {
+                $auth->setError(ExceptionCode::$ERROR_FORBIDDEN_403);
+            }
+        }
+//
+//        $auth = $this->authByEmailStep2($auth);
+//        $auth = $this->authByEmailStep1($auth);
+//        $auth = $this->authByEmailAndPassword($auth);
         return $auth;
     }
 
@@ -37,7 +58,6 @@ class DefaultAuth extends AbstractPipes
      */
     public function authByEmailStep1(AuthStatus $auth): AuthStatus
     {
-        //$auth->setToken('123321');
         return $auth;
     }
 
