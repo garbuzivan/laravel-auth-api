@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace GarbuzIvan\LaravelAuthApi;
 
-use GarbuzIvan\ImageManager\Configuration;
+use GarbuzIvan\LaravelAuthApi\Configuration;
 use GarbuzIvan\LaravelAuthApi\AuthStatus;
 use Illuminate\Pipeline\Pipeline;
 
@@ -38,6 +38,7 @@ class LaravelAuthApi
     public function auth(array $auth = null): AuthStatus
     {
         $AuthStatus = new AuthStatus($auth);
+        dd($this->config->getPipes());
         return app(Pipeline::class)
             ->send($AuthStatus)
             ->via('handler')

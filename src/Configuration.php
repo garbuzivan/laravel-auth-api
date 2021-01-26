@@ -23,7 +23,7 @@ class Configuration
 
     /**
      * Configuration constructor.
-     * @param \GarbuzIvan\ImageManager\Configuration|null $config
+     * @param Configuration|null $config
      */
     public function __construct(Configuration $config = null)
     {
@@ -48,7 +48,7 @@ class Configuration
     {
         $this->pipes = [];
         foreach ($pipes as $pipe) {
-            if ($pipe instanceof AbstractPipes) {
+            if (get_parent_class($pipe) == AbstractPipes::class) {
                 $this->pipes[] = $pipe;
             }
         }
@@ -59,10 +59,9 @@ class Configuration
      */
     public function setPipe(string $pipe): void
     {
-        if ($pipe instanceof AbstractPipes) {
+        if (get_parent_class($pipe) == AbstractPipes::class) {
             $this->pipes[] = $pipe;
         }
-
     }
 
     /**
