@@ -41,7 +41,7 @@ class LaravelAuthApi
         $AuthStatus = new AuthStatus($auth);
         return app(Pipeline::class)
             ->send($AuthStatus)
-            ->via('auth')
+            ->via('handler')
             ->through($this->config->getPipes())
             ->thenReturn();
     }

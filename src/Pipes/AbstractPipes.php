@@ -10,11 +10,26 @@ use GarbuzIvan\LaravelAuthApi\Models\AuthStatus;
 abstract class AbstractPipes
 {
     /**
-     * Method of processing authorization and obtaining a token
-     *
      * @param AuthStatus $auth
      * @param Closure $next
      * @return mixed
      */
-    abstract public function auth(AuthStatus $auth, Closure $next);
+    abstract public function handler(AuthStatus $auth, Closure $next)
+    {
+        // If the authorization was successful earlier - skip
+        if($auth->isSuccess()){
+            return $next($auth);
+        }
+        // handler
+        $auth = $this->auth($auth);
+        return $next($auth);
+    }
+
+    /**
+     * Method of processing authorization and obtaining a token
+     *
+     * @param AuthStatus $auth
+     * @return AuthStatus
+     */
+    abstract public function auth(AuthStatus $auth): AuthStatus;
 }
