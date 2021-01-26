@@ -6,7 +6,6 @@ namespace GarbuzIvan\LaravelAuthApi;
 
 use GarbuzIvan\ImageManager\Configuration;
 use GarbuzIvan\LaravelAuthApi\Models\AuthStatus;
-use GarbuzIvan\LaravelAuthApi\Pipes\AbstractPipes;
 use Illuminate\Pipeline\Pipeline;
 
 class LaravelAuthApi
