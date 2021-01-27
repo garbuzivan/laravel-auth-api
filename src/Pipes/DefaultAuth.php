@@ -36,10 +36,6 @@ class DefaultAuth extends AbstractPipes
                 $auth->setError(ExceptionCode::$ERROR_FORBIDDEN_403);
             }
         }
-//
-//        $auth = $this->authByEmailStep2($auth);
-//        $auth = $this->authByEmailStep1($auth);
-//        $auth = $this->authByEmailAndPassword($auth);
         return $auth;
     }
 
@@ -48,24 +44,6 @@ class DefaultAuth extends AbstractPipes
      * @return AuthStatus
      */
     public function authByEmailAndPassword(AuthStatus $auth): AuthStatus
-    {
-        return $auth;
-    }
-
-    /**
-     * @param AuthStatus $auth
-     * @return AuthStatus
-     */
-    public function authByEmailStep1(AuthStatus $auth): AuthStatus
-    {
-        return $auth;
-    }
-
-    /**
-     * @param AuthStatus $auth
-     * @return AuthStatus
-     */
-    public function authByEmailStep2(AuthStatus $auth): AuthStatus
     {
         return $auth;
     }
