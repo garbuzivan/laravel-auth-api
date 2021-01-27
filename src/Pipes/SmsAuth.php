@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace GarbuzIvan\LaravelAuthApi\Pipes;
 
 use GarbuzIvan\LaravelAuthApi\AuthStatus;
+use Prozorov\DataVerification\Types\Address;
 
 class SmsAuth extends AbstractPipes
 {
@@ -28,6 +29,16 @@ class SmsAuth extends AbstractPipes
     public function authBySmsStep1(AuthStatus $auth): AuthStatus
     {
         $arg = $auth->getArg();
+        $manager = app('otp');
+        $address = new Address($arg['phone']);
+        $otp = $manager->generateAndSend($address, 'sms');
+        $status = [
+            'step'  =>  'step2',
+            'code'  =>  $otp->getVerificationCode(),
+            'phone' =>  $arg['phone'],
+            'pass'  =>  false,
+        ];
+        $auth->setStatus($status);
         return $auth;
     }
 

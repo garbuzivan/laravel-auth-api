@@ -14,11 +14,9 @@ class AuthStatus
     protected array $arg = [];
 
     /**
-     * Auth Status
-     *
-     * @var array
+     * @var array|null
      */
-    protected array $status = [];
+    protected ?array $status = null;
 
     /**
      * Token code
@@ -122,5 +120,21 @@ class AuthStatus
     public function setError(string $error): void
     {
         $this->error = $error;
+    }
+
+    /**
+     * @param array|null $status
+     */
+    public function setStatus(array $status = null): void
+    {
+        $this->status = $status;
+    }
+
+    /**
+     * @return array
+     */
+    public function getStatus(): array
+    {
+        return $this->status;
     }
 }

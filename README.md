@@ -11,11 +11,18 @@
 ## Пример использования
 
 <pre>
-$LaravelAuthApi = new LaravelAuthApi();
-$result = $LaravelAuthApi->auth($argAuthArray);
-if ($result->isSuccess()){
-    dd($result->getToken());
-} else {
-    dd($result->getError());
-}
+        $LaravelAuthApi = new LaravelAuthApi();
+        $result = $LaravelAuthApi->auth(request()->all());
+        if ($result->isSuccess()) {
+            $status = $result->getStatus();
+            // Если $status = null ожидаем токен
+            if(is_null($status)){
+                dd($result->getToken());
+            } else {
+                // если статус массив, ожидаем получение данных с заполнением параметров у которых значение false
+                dd($status);
+            }
+        } else {
+            dd($result->getError());
+        }
 </pre>
