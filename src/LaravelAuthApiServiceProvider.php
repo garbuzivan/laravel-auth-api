@@ -20,6 +20,8 @@ class LaravelAuthApiServiceProvider extends ServiceProvider
         $this->publishes([
             $configPath . '/laravel-auth-api.php' => $this->publishPath('laravel-auth-api.php'),
         ], 'config');
+
+        $this->loadMigrationsFrom(__DIR__ . '/../migrations');
     }
 
     /**
