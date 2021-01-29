@@ -27,6 +27,11 @@ class EmailAuth extends AbstractPipes
      */
     public function authByEmailStep1(AuthStatus $auth): AuthStatus
     {
+        // If the authorization was successful earlier - skip
+        if($auth->isSuccess()){
+            return $auth;
+        }
+        // handler
         $arg = $auth->getArg();
         return $auth;
     }
@@ -37,6 +42,11 @@ class EmailAuth extends AbstractPipes
      */
     public function authByEmailStep2(AuthStatus $auth): AuthStatus
     {
+        // If the authorization was successful earlier - skip
+        if($auth->isSuccess()){
+            return $auth;
+        }
+        // handler
         $arg = $auth->getArg();
         return $auth;
     }

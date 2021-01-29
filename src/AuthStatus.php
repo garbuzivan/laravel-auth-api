@@ -72,7 +72,7 @@ class AuthStatus
      */
     public function isSuccess(): bool
     {
-        return is_null($this->error) && !is_null($this->token);
+        return is_null($this->getError());
     }
 
     /**
@@ -105,7 +105,7 @@ class AuthStatus
     {
         if (!is_null($this->error)) {
             return $this->error;
-        } elseif (is_null($this->token)) {
+        } elseif (is_null($this->getToken()) && is_null($this->getStatus())) {
             return 'Unknown error. Token cannot be empty';
         } else {
             return null;
@@ -133,7 +133,7 @@ class AuthStatus
     /**
      * @return array
      */
-    public function getStatus(): array
+    public function getStatus(): ?array
     {
         return $this->status;
     }

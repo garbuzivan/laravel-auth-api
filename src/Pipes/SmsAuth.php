@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace GarbuzIvan\LaravelAuthApi\Pipes;
 
-use App\Models\User;
 use GarbuzIvan\LaravelAuthApi\AuthStatus;
-use Illuminate\Support\Facades\Auth;
+use GarbuzIvan\LaravelAuthApi\User\UserTransport;
 use Illuminate\Support\Str;
 use Prozorov\DataVerification\Exceptions\LimitException;
 use Prozorov\DataVerification\Exceptions\VerificationException;
@@ -33,6 +32,12 @@ class SmsAuth extends AbstractPipes
      */
     public function authBySmsStep1(AuthStatus $auth): AuthStatus
     {
+        // If the authorization was successful earlier - skip
+        if($auth->isSuccess()){
+            return $auth;
+        }
+        // handler
+        $arg = $auth->getArg();
         if (isset($arg['phone']) && !is_null($arg['phone'])) {
             $arg = $auth->getArg();
             $manager = app('otp');
@@ -55,8 +60,13 @@ class SmsAuth extends AbstractPipes
      */
     public function authBySmsStep2(AuthStatus $auth): AuthStatus
     {
+        // If the authorization was successful earlier - skip
+        if($auth->isSuccess()){
+            return $auth;
+        }
+        // handler
+        $arg = $auth->getArg();
         if (isset($arg['phone']) && isset($arg['code']) && isset($arg['pass'])) {
-            $arg = $auth->getArg();
             $manager = app('otp');
             try {
                 $manager->verifyOrFail($arg['code'], $arg['pass']);
@@ -64,7 +74,7 @@ class SmsAuth extends AbstractPipes
                 $auth->setError($e->getMessage());
             }
             $newToken = Str::random(80);
-            User::where('id', Auth::user()->id)->update(['api_token' => $newToken]);
+            (new UserTransport)->getUserOrCreatePhone($arg['phone'], $newToken);
             $auth->setToken($newToken);
         }
         return $auth;
