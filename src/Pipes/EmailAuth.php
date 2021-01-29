@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace GarbuzIvan\LaravelAuthApi\Pipes;
 
+use GarbuzIvan\ImageManager\Models\CodeEmail;
 use GarbuzIvan\LaravelAuthApi\AuthStatus;
+use GarbuzIvan\LaravelAuthApi\Generator;
+use Illuminate\Support\Str;
 use Prozorov\DataVerification\Types\Address;
 
 class EmailAuth extends AbstractPipes
@@ -34,18 +37,18 @@ class EmailAuth extends AbstractPipes
         }
         // handler
         $arg = $auth->getArg();
-        if (isset($arg['email']) && !is_null($arg['email'])) {
+        if (isset($arg['email']) && filter_var($arg['email'], FILTER_VALIDATE_EMAIL)) {
             $arg = $auth->getArg();
-            $manager = app('otp');
-            $address = new Address($arg['phone']);
-            $otp = $manager->generateAndSend($address, 'sms');
-            $status = [
-                'step' => 'step2',
-                'code' => $otp->getVerificationCode(),
-                'phone' => $arg['phone'],
-                'pass' => false,
+            $data = [
+                'email' =>  $arg['email'],
+                'code'  =>  Str::random(40),
+                'pass' =>   Generator::code(),
             ];
-            $auth->setStatus($status);
+            CodeEmail::created($data);
+            $data['step'] = 'step2';
+            $data['pass'] = false;
+            // event email send
+            $auth->setStatus($data);
         }
         return $auth;
     }
