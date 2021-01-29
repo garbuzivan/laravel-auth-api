@@ -13,7 +13,7 @@ class CreateLaravelAuthApiTable extends Migration
      */
     public function up()
     {
-        Schema::create('auth_api_email', function (Blueprint $table) {
+        Schema::create('auth_api_email_code', function (Blueprint $table) {
             $table->id();
             $table->string('email');
             $table->string('code');
@@ -29,6 +29,6 @@ class CreateLaravelAuthApiTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('auth_api_email');
+        Schema::dropIfExists('auth_api_email_code');
     }
 }
