@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace GarbuzIvan\LaravelAuthApi\Pipes;
 
-use GarbuzIvan\ImageManager\Models\CodeEmail;
+use GarbuzIvan\LaravelAuthApi\Models\CodeEmail;
 use GarbuzIvan\LaravelAuthApi\AuthStatus;
 use GarbuzIvan\LaravelAuthApi\ExceptionCode;
 use GarbuzIvan\LaravelAuthApi\Generator;

@@ -17,7 +17,7 @@ class Generator
         $length = 4;
         $code = null;
         while($length > 0){
-            $code = $charset[array_rand($charset)];
+            $code .= $charset[array_rand($charset)];
             $length--;
         }
         return strval($code);
