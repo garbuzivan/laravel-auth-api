@@ -6,8 +6,13 @@ namespace GarbuzIvan\LaravelAuthApi\Pipes;
 
 use GarbuzIvan\ImageManager\Models\CodeEmail;
 use GarbuzIvan\LaravelAuthApi\AuthStatus;
+use GarbuzIvan\LaravelAuthApi\ExceptionCode;
 use GarbuzIvan\LaravelAuthApi\Generator;
+use GarbuzIvan\LaravelAuthApi\User\UserTransport;
 use Illuminate\Support\Str;
+use Mockery\Exception;
+use Prozorov\DataVerification\Exceptions\LimitException;
+use Prozorov\DataVerification\Exceptions\VerificationException;
 use Prozorov\DataVerification\Types\Address;
 
 class EmailAuth extends AbstractPipes
@@ -43,10 +48,12 @@ class EmailAuth extends AbstractPipes
                 'email' =>  $arg['email'],
                 'code'  =>  Str::random(40),
                 'pass' =>   Generator::code(),
+                'use' =>   0,
             ];
             CodeEmail::created($data);
             $data['step'] = 'step2';
             $data['pass'] = false;
+            unset($data['use']);
             // event email send
             $auth->setStatus($data);
         }
@@ -65,6 +72,21 @@ class EmailAuth extends AbstractPipes
         }
         // handler
         $arg = $auth->getArg();
+        if (isset($arg['email']) && isset($arg['code']) && isset($arg['pass'])) {
+            $validCode = CodeEmail::where('email', $arg['email'])
+                ->where('code', $arg['code'])
+                ->where('pass', $arg['pass'])
+                ->where('use', 0)
+                ->first();
+            if(is_null($validCode)){
+                $auth->setError(ExceptionCode::$ERROR_FORBIDDEN_403);
+            } else {
+                CodeEmail::where('id', $validCode->id)->update(['use' => 1]);
+                $newToken = Str::random(80);
+                (new UserTransport)->getUserOrCreateEmail($arg['email'], $newToken);
+                $auth->setToken($newToken);
+            }
+        }
         return $auth;
     }
 }
