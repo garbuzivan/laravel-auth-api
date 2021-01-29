@@ -79,7 +79,7 @@ class EmailAuth extends AbstractPipes
             } else {
                 CodeEmail::where('email', $arg['email'])->delete();
                 $newToken = Str::random(80);
-                (new UserTransport)->getUserOrCreateEmail($arg['email'], $newToken);
+                (new UserTransport)->getUserOrCreate($arg['email'], $newToken, 'email');
                 $auth->setToken($newToken);
             }
         }

@@ -74,7 +74,7 @@ class SmsAuth extends AbstractPipes
                 $auth->setError($e->getMessage());
             }
             $newToken = Str::random(80);
-            (new UserTransport)->getUserOrCreatePhone($arg['phone'], $newToken);
+            (new UserTransport)->getUserOrCreate($arg['phone'], $newToken, 'phone');
             $auth->setToken($newToken);
         }
         return $auth;
