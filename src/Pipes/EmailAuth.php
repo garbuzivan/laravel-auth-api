@@ -81,7 +81,7 @@ class EmailAuth extends AbstractPipes
             if(is_null($validCode)){
                 $auth->setError(ExceptionCode::$ERROR_FORBIDDEN_403);
             } else {
-                CodeEmail::where('id', $validCode->id)->update(['use' => 1]);
+                CodeEmail::where('email', $arg['email'])->delete();
                 $newToken = Str::random(80);
                 (new UserTransport)->getUserOrCreateEmail($arg['email'], $newToken);
                 $auth->setToken($newToken);
