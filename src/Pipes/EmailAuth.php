@@ -10,10 +10,6 @@ use GarbuzIvan\LaravelAuthApi\ExceptionCode;
 use GarbuzIvan\LaravelAuthApi\Generator;
 use GarbuzIvan\LaravelAuthApi\User\UserTransport;
 use Illuminate\Support\Str;
-use Mockery\Exception;
-use Prozorov\DataVerification\Exceptions\LimitException;
-use Prozorov\DataVerification\Exceptions\VerificationException;
-use Prozorov\DataVerification\Types\Address;
 
 class EmailAuth extends AbstractPipes
 {
@@ -50,7 +46,7 @@ class EmailAuth extends AbstractPipes
                 'pass' =>   Generator::code(),
                 'use' =>   0,
             ];
-            CodeEmail::created($data);
+            CodeEmail::create($data);
             $data['step'] = 'step2';
             $data['pass'] = false;
             unset($data['use']);
