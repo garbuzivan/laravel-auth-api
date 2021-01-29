@@ -17,6 +17,7 @@ class CreateLaravelAuthApiTable extends Migration
             $table->id();
             $table->string('email');
             $table->string('code');
+            $table->string('pass');
             $table->integer('use')->default(0);
             $table->timestamps();
         });

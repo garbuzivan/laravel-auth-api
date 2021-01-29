@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace GarbuzIvan\LaravelAuthApi\Pipes;
 
 use GarbuzIvan\LaravelAuthApi\AuthStatus;
+use Prozorov\DataVerification\Types\Address;
 
 class EmailAuth extends AbstractPipes
 {
@@ -33,6 +34,19 @@ class EmailAuth extends AbstractPipes
         }
         // handler
         $arg = $auth->getArg();
+        if (isset($arg['email']) && !is_null($arg['email'])) {
+            $arg = $auth->getArg();
+            $manager = app('otp');
+            $address = new Address($arg['phone']);
+            $otp = $manager->generateAndSend($address, 'sms');
+            $status = [
+                'step' => 'step2',
+                'code' => $otp->getVerificationCode(),
+                'phone' => $arg['phone'],
+                'pass' => false,
+            ];
+            $auth->setStatus($status);
+        }
         return $auth;
     }
 

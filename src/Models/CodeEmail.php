@@ -20,6 +20,7 @@ class CodeEmail extends Model
     protected $fillable = [
         'email',
         'code',
+        'pass',
         'use',
     ];
 
