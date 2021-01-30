@@ -33,13 +33,24 @@ class AuthStatus
     protected ?string $error = null;
 
     /**
+     * @var Configuration|null
+     */
+    protected ?Configuration $config = null;
+
+    /**
      * Configuration constructor.
      * @param array|null $auth
+     * @param Configuration|null $config
      */
-    public function __construct(array $auth = null)
+    public function __construct(array $auth = null, ?Configuration $config = null)
     {
         if (!is_null($auth)) {
             $this->setArg($auth);
+        }
+        if($config instanceof Configuration) {
+            $this->$config = $config;
+        } else {
+            $this->$config = new Configuration();
         }
     }
 
