@@ -51,6 +51,8 @@ class EmailAuth extends AbstractPipes
             $data['pass'] = false;
             unset($data['use']);
             // event email send
+
+
             $auth->setStatus($data);
         }
         return $auth;

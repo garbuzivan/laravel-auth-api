@@ -6,6 +6,7 @@ namespace GarbuzIvan\LaravelAuthApi\Pipes;
 
 use GarbuzIvan\LaravelAuthApi\AuthStatus;
 use GarbuzIvan\LaravelAuthApi\ExceptionCode;
+use GarbuzIvan\LaravelAuthApi\User\UserTransport;
 use Illuminate\Support\Facades\Auth;
 
 class DefaultAuth extends AbstractPipes
@@ -27,10 +28,7 @@ class DefaultAuth extends AbstractPipes
                 if (!isset(Auth::user()->api_token)) {
                     $auth->setError(ExceptionCode::$ERROR_DONT_CREATE_API_TOKIN_IN_DB);
                 }
-                $token = Auth::user()->api_token;
-                if (is_null($token)) {
-                    $auth->setError(ExceptionCode::$ERROR_DONT_CREATE_API_TOKIN_IN_DB);
-                }
+                $token = (new UserTransport)->getUserTokenAfterAuth(Auth::user(), $auth->config);
                 $auth->setToken($token);
             } else {
                 $auth->setError(ExceptionCode::$ERROR_FORBIDDEN_403);

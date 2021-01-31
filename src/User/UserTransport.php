@@ -10,28 +10,38 @@ use Illuminate\Support\Str;
 
 class UserTransport
 {
+    /**
+     * @param $value
+     * @param string $field
+     * @param Configuration $config
+     * @return string|null
+     */
     public function getUserOrCreate($value, $field = 'email', Configuration $config): ?string
     {
         if (is_null($field)) {
             return null;
         }
-        $update = [];
         $user = User::where($field, $value)->first();
         $token = Str::random(80);
         if (is_null($user)) {
             $user = User::create([$field => $value, 'api_token' => $token]);
         } else {
-            $token = $user->api_token;
-            if ($config->isNewToken()) {
-                $update = ['api_token' => $token];
-            }
+            return $this->getUserTokenAfterAuth($user, $config);
         }
         if (is_null($user->name) || mb_strlen(trim($user->name)) == 0) {
-            $update['name'] = 'ID' . $user->id;
-        }
-        if (is_array($update) && count($update) > 0) {
-            User::where('id', $user->id)->update($update);
+            User::where('id', $user->id)->update(['name' => 'ID' . $user->id]);
         }
         return $token;
+    }
+
+    public function getUserTokenAfterAuth($user, Configuration $config): ?string
+    {
+        if(!$config->isNewToken() && !is_null($user->api_token)){
+            return $user->api_token;
+        } else {
+            $token = Str::random(80);
+            $user->update(['api_token' => $token]);
+            return $token;
+        }
     }
 }
