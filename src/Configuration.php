@@ -64,7 +64,26 @@ class Configuration
      */
     public function load(): Configuration
     {
-        $this->setPipes(config($this->configFile . '.pipes'));
+        $pipes = config($this->configFile . '.pipes');
+        if(is_array($pipes)){
+            $this->setPipes($pipes);
+        }
+        $newTokenActive = config($this->configFile . '.new_token_after_auth');
+        if(is_bool($newTokenActive)){
+            $this->newTokenActive($newTokenActive);
+        }
+        $lengthToken = config($this->configFile . '.length_token');
+        if(is_int($lengthToken)){
+            $this->setTokenLength($lengthToken);
+        }
+        $generateCodeCharset = config($this->configFile . '.code_email.charset');
+        if(is_array($generateCodeCharset)){
+            $this->setGeneratorCodeCharsets($generateCodeCharset);
+        }
+        $generateCodeLength = config($this->configFile . '.code_email.length');
+        if(is_int($generateCodeLength)){
+            $this->setGeneratorCodeLength($generateCodeLength);
+        }
         return $this;
     }
 
