@@ -28,7 +28,6 @@ class DefaultAuth extends AbstractPipes
                 if (!isset(Auth::user()->api_token)) {
                     $auth->setError(ExceptionCode::$ERROR_DONT_CREATE_API_TOKIN_IN_DB);
                 }
-                var_dump(Auth::user()); exit();
                 $token = (new UserTransport)->getUserTokenAfterAuth(Auth::user(), $auth->config);
                 $auth->setToken($token);
             } else {

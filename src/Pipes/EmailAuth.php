@@ -21,8 +21,10 @@ class EmailAuth extends AbstractPipes
      */
     public function auth(AuthStatus $auth): AuthStatus
     {
-        $auth = $this->authByEmailStep2($auth);
-        $auth = $this->authByEmailStep1($auth);
+        if(!isset($arg['password'])){
+            $auth = $this->authByEmailStep2($auth);
+            $auth = $this->authByEmailStep1($auth);
+        }
         return $auth;
     }
 
