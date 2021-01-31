@@ -35,7 +35,7 @@ class AuthStatus
     /**
      * @var Configuration|null
      */
-    protected ?Configuration $config = null;
+    public ?Configuration $config = null;
 
     /**
      * Configuration constructor.
@@ -47,7 +47,7 @@ class AuthStatus
         if (!is_null($auth)) {
             $this->setArg($auth);
         }
-        if($config instanceof Configuration) {
+        if ($config instanceof Configuration) {
             $this->$config = $config;
         } else {
             $this->$config = new Configuration();

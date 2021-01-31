@@ -20,6 +20,33 @@ class Configuration
      */
     protected $pipes = [];
 
+    /**
+     * Create new token if api token exists in user
+     *
+     * @var bool
+     */
+    protected bool $newToken = true;
+
+    /**
+     * Length token
+     *
+     * @var int
+     */
+    protected int $lengthToken = 80;
+
+    /**
+     * Email generator code - charsets
+     *
+     * @var array
+     */
+    protected array $generatorCodeCharsets = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+
+    /**
+     * Email generator code - length
+     *
+     * @var int
+     */
+    protected int $generatorCodeLength = 4;
 
     /**
      * Configuration constructor.
@@ -71,4 +98,69 @@ class Configuration
     {
         return $this->pipes;
     }
+
+    /**
+     * @param bool $newToken
+     */
+    public function newTokenActive(bool $newToken): void
+    {
+        $this->newToken = $newToken;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isNewToken(): bool
+    {
+        return $this->newToken;
+    }
+
+    /**
+     * @param int $length
+     */
+    public function setTokenLength(int $length): void
+    {
+        $this->lengthToken = $length;
+    }
+
+    /**
+     * @return int
+     */
+    public function getTokenLength(): int
+    {
+        return $this->lengthToken;
+    }
+
+    /**
+     * @param array $charsets
+     */
+    public function setGeneratorCodeCharsets(array $charsets): void
+    {
+        $this->generatorCodeCharsets = $charsets;
+    }
+
+    /**
+     * @return array
+     */
+    public function getGeneratorCodeCharsets(): array
+    {
+        return $this->generatorCodeCharsets;
+    }
+
+    /**
+     * @param int $length
+     */
+    public function setGeneratorCodeLength(int $length): void
+    {
+        $this->generatorCodeLength = $length;
+    }
+
+    /**
+     * @return int
+     */
+    public function getGeneratorCodeLength(): int
+    {
+        return $this->generatorCodeLength;
+    }
+
 }

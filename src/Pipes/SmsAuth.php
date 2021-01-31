@@ -73,9 +73,8 @@ class SmsAuth extends AbstractPipes
             } catch (\OutOfBoundsException|VerificationException|LimitException $e) {
                 $auth->setError($e->getMessage());
             }
-            $newToken = Str::random(80);
-            (new UserTransport)->getUserOrCreate($arg['phone'], $newToken, 'phone');
-            $auth->setToken($newToken);
+            $token = (new UserTransport)->getUserOrCreate($arg['phone'], 'phone', $auth->config);
+            $auth->setToken($token);
         }
         return $auth;
     }

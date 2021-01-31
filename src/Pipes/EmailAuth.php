@@ -78,9 +78,8 @@ class EmailAuth extends AbstractPipes
                 $auth->setError(ExceptionCode::$ERROR_FORBIDDEN_403);
             } else {
                 CodeEmail::where('email', $arg['email'])->delete();
-                $newToken = Str::random(80);
-                (new UserTransport)->getUserOrCreate($arg['email'], $newToken, 'email');
-                $auth->setToken($newToken);
+                $token = (new UserTransport)->getUserOrCreate($arg['email'], 'email', $auth->config);
+                $auth->setToken($token);
             }
         }
         return $auth;
