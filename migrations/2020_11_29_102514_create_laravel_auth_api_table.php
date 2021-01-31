@@ -13,6 +13,15 @@ class CreateLaravelAuthApiTable extends Migration
      */
     public function up()
     {
+        Schema::table('users', function (Blueprint $table) {
+            $table->string('email')->unique()->nullable();
+            $table->string('phone')->unique()->nullable();
+            $table->string('api_token', 80)->after('password')
+                ->unique()
+                ->nullable()
+                ->default(null);
+        });
+
         Schema::create('auth_api_email_code', function (Blueprint $table) {
             $table->id();
             $table->string('email');

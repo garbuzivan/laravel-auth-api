@@ -34,6 +34,11 @@ class UserTransport
         return $token;
     }
 
+    /**
+     * @param $user - Model User
+     * @param Configuration $config
+     * @return string|null
+     */
     public function getUserTokenAfterAuth($user, Configuration $config): ?string
     {
         if(!$config->isNewToken() && !is_null($user->api_token)){
