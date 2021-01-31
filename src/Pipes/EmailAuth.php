@@ -43,7 +43,7 @@ class EmailAuth extends AbstractPipes
             $data = [
                 'email' =>  $arg['email'],
                 'code'  =>  Str::random(40),
-                'pass' =>   Generator::code(),
+                'pass' =>   Generator::code($auth->config),
                 'use' =>   0,
             ];
             CodeEmail::create($data);

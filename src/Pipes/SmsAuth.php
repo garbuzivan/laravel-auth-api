@@ -6,7 +6,6 @@ namespace GarbuzIvan\LaravelAuthApi\Pipes;
 
 use GarbuzIvan\LaravelAuthApi\AuthStatus;
 use GarbuzIvan\LaravelAuthApi\User\UserTransport;
-use Illuminate\Support\Str;
 use Prozorov\DataVerification\Exceptions\LimitException;
 use Prozorov\DataVerification\Exceptions\VerificationException;
 use Prozorov\DataVerification\Types\Address;

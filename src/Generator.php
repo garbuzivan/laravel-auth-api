@@ -9,12 +9,13 @@ class Generator
     /**
      * generate code
      *
+     * @param Configuration $config
      * @return string
      */
-    public static function code(): string
+    public static function code(Configuration $config): string
     {
-        $charset = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
-        $length = 4;
+        $charset = $config->getGeneratorCodeCharsets();
+        $length = $config->getGeneratorCodeLength();
         $code = null;
         while($length > 0){
             $code .= $charset[array_rand($charset)];
