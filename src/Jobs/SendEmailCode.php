@@ -18,14 +18,27 @@ class SendEmailCode implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /**
+     * @var array
+     */
+    public array $data;
+
+    /**
+     * SendEmailCode constructor.
+     * @param array $data
+     */
+    public function __construct(array $data)
+    {
+        $this->data = $data;
+    }
+
+    /**
      * Execute the job.
      *
-     * @param array $details
      * @return void
      */
-    public function handle(array $details)
+    public function handle()
     {
-        Mail::to($details['to'])->send(new CodeEmail($details));
+        Mail::to($this->data['to'])->send(new CodeEmail($this->data));
         return "Success";
     }
 }
