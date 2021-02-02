@@ -16,7 +16,7 @@ class UserTransport
      * @param Configuration $config
      * @return string|null
      */
-    public function getUserOrCreate($value, $field = 'email', Configuration $config): ?string
+    public function getUserOrCreate($value, $field = null, Configuration $config): ?string
     {
         if (is_null($field)) {
             return null;

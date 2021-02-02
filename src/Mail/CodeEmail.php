@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Mail;
+namespace GarbuzIvan\LaravelAuthApi\Mail;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
@@ -15,20 +15,13 @@ class CodeEmail extends Mailable
     public function __construct($data)
     {
         $this->data = $data;
+        $this->data['title'] = $this->data['title'] ?? null;
+        $this->data['subject'] = $this->data['subject'] ?? $this->data['title'];
+        $this->data['view'] = $this->data['view'] ?? '';
     }
 
     public function build()
     {
-        $address = 'garbuzivan90@ya.ru';
-        $subject = 'АВТОМАРКЕТ: Код авторизации';
-        $name = 'АВТОМАРКЕТ';
-
-        return $this->view('emails.test')
-            ->from($address, $name)
-            ->cc($address, $name)
-            ->bcc($address, $name)
-            ->replyTo($address, $name)
-            ->subject($subject)
-            ->with([ 'test_message' => $this->data['message'] ]);
+        return $this->subject($this->data['subject'])->view($this->data['view']);
     }
 }

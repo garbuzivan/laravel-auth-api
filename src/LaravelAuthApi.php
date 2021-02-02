@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace GarbuzIvan\LaravelAuthApi;
 
-use GarbuzIvan\LaravelAuthApi\Configuration;
-use GarbuzIvan\LaravelAuthApi\AuthStatus;
 use Illuminate\Pipeline\Pipeline;
 
 class LaravelAuthApi

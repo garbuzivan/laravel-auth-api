@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace GarbuzIvan\LaravelAuthApi;
 
-use GarbuzIvan\LaravelAuthApi\Pipes\AbstractCommand;
+use GarbuzIvan\LaravelAuthApi\Pipes\AbstractPipes;
 
 class Configuration
 {
@@ -49,6 +49,13 @@ class Configuration
     protected int $generatorCodeLength = 4;
 
     /**
+     * View mail
+     *
+     * @var string
+     */
+    protected string $viewMail = 'gi_laravel_auth_api::Mail';
+
+    /**
      * Configuration constructor.
      * @param Configuration|null $config
      */
@@ -84,6 +91,10 @@ class Configuration
         if(is_int($generateCodeLength)){
             $this->setGeneratorCodeLength($generateCodeLength);
         }
+        $viewMail = config($this->configFile . '.view_mail');
+        if(!is_null($viewMail)){
+            $this->setViewMail($viewMail);
+        }
         return $this;
     }
 
@@ -105,7 +116,7 @@ class Configuration
      */
     public function setPipe(string $pipe): void
     {
-        if (get_parent_class($pipe) == AbstractCommand::class) {
+        if (get_parent_class($pipe) == AbstractPipes::class) {
             $this->pipes[] = $pipe;
         }
     }
@@ -180,6 +191,16 @@ class Configuration
     public function getGeneratorCodeLength(): int
     {
         return $this->generatorCodeLength;
+    }
+
+    public function setViewMail(string $view): void
+    {
+        $this->viewMail = $view;
+    }
+
+    public function getViewMail(): string
+    {
+        $this->viewMail;
     }
 
 }

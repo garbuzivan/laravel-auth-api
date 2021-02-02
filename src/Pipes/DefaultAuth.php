@@ -9,7 +9,7 @@ use GarbuzIvan\LaravelAuthApi\ExceptionCode;
 use GarbuzIvan\LaravelAuthApi\User\UserTransport;
 use Illuminate\Support\Facades\Auth;
 
-class DefaultAuth extends AbstractCommand
+class DefaultAuth extends AbstractPipes
 {
     /**
      * Method of processing authorization and obtaining a token

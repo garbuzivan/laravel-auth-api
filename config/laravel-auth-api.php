@@ -22,4 +22,7 @@ return [
         'length'    =>  4,
     ],
 
+    // Template Mail
+    'view_mail'  => 'gi_laravel_auth_api::Mail',
+
 ];
