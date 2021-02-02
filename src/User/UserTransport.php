@@ -12,11 +12,11 @@ class UserTransport
 {
     /**
      * @param $value
-     * @param string $field
+     * @param string|null $field
      * @param Configuration $config
      * @return string|null
      */
-    public function getUserOrCreate($value, $field = null, Configuration $config): ?string
+    public function getUserOrCreate($value, string $field = null, Configuration $config): ?string
     {
         if (is_null($field)) {
             return null;
