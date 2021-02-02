@@ -38,10 +38,9 @@
         // Если $status = null ожидаем Token
         if(is_null($status)){
             return $this->sendJson(['token' => $result->getToken()]);
-        } else {
-            // если статус массив, ожидаем получение данных с заполнением параметров у которых значение false
-            return $this->sendJson($status);
         }
+        // если статус массив, ожидаем получение данных с заполнением параметров у которых значение false
+        return $this->sendJson($status);
 </pre>
 
 
