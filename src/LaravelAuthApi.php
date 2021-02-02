@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace GarbuzIvan\LaravelAuthApi;
 
-use Illuminate\Pipeline\Pipeline;
+use Illuminate\Contracts\Pipeline\Pipeline;
 
 class LaravelAuthApi
 {
@@ -17,14 +17,9 @@ class LaravelAuthApi
      * Configuration constructor.
      * @param Configuration|null $config
      */
-    public function __construct(Configuration $config = null)
+    public function __construct(?Configuration $config = null)
     {
-        if (is_null($config)) {
-            $config = new Configuration();
-        }
-        if ($config instanceof Configuration) {
-            $this->config = $config;
-        }
+        $this->config = $config ?? new Configuration();
     }
 
     /**

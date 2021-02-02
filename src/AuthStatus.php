@@ -47,11 +47,7 @@ class AuthStatus
         if (!is_null($auth)) {
             $this->setArg($auth);
         }
-        if ($config instanceof Configuration) {
-            $this->config = $config;
-        } else {
-            $this->config = new Configuration();
-        }
+        $this->config = $config ?? new Configuration();
     }
 
     /**
