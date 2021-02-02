@@ -14,7 +14,20 @@
 `GarbuzIvan\LaravelAuthApi\LaravelAuthApiServiceProvider::class,`
 
 ### .env
-Функция отправки сообщений на EMAIL использует настройки .env Laravel блок MAIL
+Функция отправки сообщений на EMAIL использует настройки .env Laravel блок MAIL$LaravelAuthApi = new LaravelAuthApi();
+                                                                                       $result = $LaravelAuthApi->auth(request()->all());
+                                                                                       if ($result->isSuccess()) {
+                                                                                           $status = $result->getStatus();
+                                                                                           // Если $status = null ожидаем Token
+                                                                                           if(is_null($status)){
+                                                                                               return $this->sendJson(['token' => $result->getToken()]);
+                                                                                           } else {
+                                                                                               // если статус массив, ожидаем получение данных с заполнением параметров у которых значение false
+                                                                                               return $this->sendJson($status);
+                                                                                           }
+                                                                                       } else {
+                                                                                           return $this->sendError($result->getError(), 403);
+                                                                                       }
 
 ## Пример использования
 
@@ -23,14 +36,14 @@
         $result = $LaravelAuthApi->auth(request()->all());
         if ($result->isSuccess()) {
             $status = $result->getStatus();
-            // Если $status = null ожидаем токен
+            // Если $status = null ожидаем Token
             if(is_null($status)){
-                dd($result->getToken());
+                return $this->sendJson(['token' => $result->getToken()]);
             } else {
                 // если статус массив, ожидаем получение данных с заполнением параметров у которых значение false
-                dd($status);
+                return $this->sendJson($status);
             }
         } else {
-            dd($result->getError());
+            return $this->sendError($result->getError(), 403);
         }
 </pre>
