@@ -23,6 +23,6 @@ return [
     ],
 
     // Template Mail
-    'view_mail'  => 'gi_laravel_auth_api::Mail',
+    'view_mail'  => 'gi_laravel_auth_api::mail',
 
 ];

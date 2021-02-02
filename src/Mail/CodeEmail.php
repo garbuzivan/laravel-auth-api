@@ -24,7 +24,7 @@ class CodeEmail extends Mailable
         $this->data = $data;
         $this->data['title'] = $this->data['title'] ?? null;
         $this->data['subject'] = $this->data['subject'] ?? $this->data['title'];
-        $this->data['view'] = $this->data['view'] ?? 'gi_laravel_auth_api::Mail';
+        $this->data['view'] = $this->data['view'] ?? 'gi_laravel_auth_api::mail';
     }
 
     /**
