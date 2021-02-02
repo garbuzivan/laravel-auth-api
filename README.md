@@ -8,6 +8,11 @@
 
 `php artisan vendor:publish  --force --provider="GarbuzIvan\LaravelAuthApi\LaravelAuthApiServiceProvider" --tag="config"`
 
+
+<p>config/app.php в блок 'providers' => []</p>
+
+`GarbuzIvan\LaravelAuthApi\LaravelAuthApiServiceProvider::class,`
+
 ## Пример использования
 
 <pre>

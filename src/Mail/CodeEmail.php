@@ -32,6 +32,6 @@ class CodeEmail extends Mailable
      */
     public function build()
     {
-        return $this->subject($this->data['subject'])->view($this->data['view']);
+        return $this->subject($this->data['subject'])->view($this->data['view'], ['details' => $this->data]);
     }
 }
