@@ -31,17 +31,16 @@
 <pre>
         $LaravelAuthApi = new LaravelAuthApi();
         $result = $LaravelAuthApi->auth(request()->all());
-        if ($result->isSuccess()) {
-            $status = $result->getStatus();
-            // Если $status = null ожидаем Token
-            if(is_null($status)){
-                return $this->sendJson(['token' => $result->getToken()]);
-            } else {
-                // если статус массив, ожидаем получение данных с заполнением параметров у которых значение false
-                return $this->sendJson($status);
-            }
-        } else {
+        if (!$result->isSuccess()) {
             return $this->sendError($result->getError(), 403);
+        }
+        $status = $result->getStatus();
+        // Если $status = null ожидаем Token
+        if(is_null($status)){
+            return $this->sendJson(['token' => $result->getToken()]);
+        } else {
+            // если статус массив, ожидаем получение данных с заполнением параметров у которых значение false
+            return $this->sendJson($status);
         }
 </pre>
 
