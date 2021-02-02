@@ -200,7 +200,7 @@ class Configuration
 
     public function getViewMail(): string
     {
-        $this->viewMail;
+        return $this->viewMail;
     }
 
 }
