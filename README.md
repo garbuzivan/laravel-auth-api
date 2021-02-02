@@ -13,6 +13,9 @@
 
 `GarbuzIvan\LaravelAuthApi\LaravelAuthApiServiceProvider::class,`
 
+### .env
+Функция отправки сообщений на EMAIL использует настройки .env Laravel блок MAIL
+
 ## Пример использования
 
 <pre>

@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>{{ $details['title'] ?? null }}</title>
+    <title>{{ $data['title'] ?? null }}</title>
 </head>
 <body>
-<h1>{{ $details['title'] ?? null }}</h1>
-<p>{{ $details['body'] ?? null }}</p>
+<h1>{{ $data['title'] ?? null }}</h1>
+<p>{!! $data['body'] ?? null !!}</p>
 </body>
 </html>

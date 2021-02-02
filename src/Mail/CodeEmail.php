@@ -19,7 +19,7 @@ class CodeEmail extends Mailable
      * CodeEmail constructor.
      * @param $data
      */
-    public function __construct($data)
+    public function __construct(array $data)
     {
         $this->data = $data;
         $this->data['title'] = $this->data['title'] ?? null;
@@ -32,6 +32,6 @@ class CodeEmail extends Mailable
      */
     public function build()
     {
-        return $this->subject($this->data['subject'])->view($this->data['view'], ['details' => $this->data]);
+        return $this->subject($this->data['subject'])->view($this->data['view']);
     }
 }
