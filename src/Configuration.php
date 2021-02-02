@@ -18,7 +18,7 @@ class Configuration
      *
      * @var array
      */
-    protected $pipes = [];
+    protected array $pipes = [];
 
     /**
      * Create new token if api token exists in user
@@ -105,7 +105,7 @@ class Configuration
     {
         $this->pipes = [];
         foreach ($pipes as $pipe) {
-            if (get_parent_class($pipe) == AbstractCommand::class) {
+            if (get_parent_class($pipe) == AbstractPipes::class) {
                 $this->pipes[] = $pipe;
             }
         }
