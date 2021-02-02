@@ -112,11 +112,11 @@ class AuthStatus
     {
         if (!is_null($this->error)) {
             return $this->error;
-        } elseif (is_null($this->getToken()) && is_null($this->getStatus())) {
-            return 'Unknown error. Token cannot be empty';
-        } else {
-            return null;
         }
+        if (is_null($this->getToken()) && is_null($this->getStatus())) {
+            return 'Unknown error. Token cannot be empty';
+        }
+        return null;
     }
 
     /**
