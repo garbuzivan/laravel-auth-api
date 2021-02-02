@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace GarbuzIvan\LaravelAuthApi\Pipes;
 
-use GarbuzIvan\LaravelAuthApi\Models\CodeEmail;
+use GarbuzIvan\LaravelAuthApi\Models\TgBotUser;
 use GarbuzIvan\LaravelAuthApi\AuthStatus;
 use GarbuzIvan\LaravelAuthApi\ExceptionCode;
 use GarbuzIvan\LaravelAuthApi\Generator;
 use GarbuzIvan\LaravelAuthApi\User\UserTransport;
 use Illuminate\Support\Str;
 
-class EmailAuth extends AbstractPipes
+class EmailAuth extends AbstractCommand
 {
     /**
      * Method of processing authorization and obtaining a token
@@ -49,7 +49,7 @@ class EmailAuth extends AbstractPipes
                 'pass' =>   Generator::code($auth->config),
                 'use' =>   0,
             ];
-            CodeEmail::create($data);
+            TgBotUser::create($data);
             $data['step'] = 'step2';
             $data['pass'] = false;
             unset($data['use']);
@@ -74,7 +74,7 @@ class EmailAuth extends AbstractPipes
         // handler
         $arg = $auth->getArg();
         if (isset($arg['email']) && isset($arg['code']) && isset($arg['pass'])) {
-            $validCode = CodeEmail::where('email', $arg['email'])
+            $validCode = TgBotUser::where('email', $arg['email'])
                 ->where('code', $arg['code'])
                 ->where('pass', $arg['pass'])
                 ->where('use', 0)
@@ -82,7 +82,7 @@ class EmailAuth extends AbstractPipes
             if(is_null($validCode)){
                 $auth->setError(ExceptionCode::$ERROR_FORBIDDEN_403);
             } else {
-                CodeEmail::where('email', $arg['email'])->delete();
+                TgBotUser::where('email', $arg['email'])->delete();
                 $token = (new UserTransport)->getUserOrCreate($arg['email'], 'email', $auth->config);
                 $auth->setToken($token);
             }

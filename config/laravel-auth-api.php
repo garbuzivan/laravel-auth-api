@@ -7,7 +7,7 @@ return [
     'pipes' => [
         \GarbuzIvan\LaravelAuthApi\Pipes\SmsAuth::class,
         \GarbuzIvan\LaravelAuthApi\Pipes\EmailAuth::class,
-        \GarbuzIvan\LaravelAuthApi\Pipes\DefaultAuth::class,
+        \GarbuzIvan\LaravelAuthApi\Pipes\Start::class,
     ],
 
     // Create new token if api token exists in user

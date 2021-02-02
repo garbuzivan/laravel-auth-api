@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace GarbuzIvan\LaravelAuthApi;
 
-use GarbuzIvan\LaravelAuthApi\Pipes\AbstractPipes;
+use GarbuzIvan\LaravelAuthApi\Pipes\AbstractCommand;
 
 class Configuration
 {
@@ -94,7 +94,7 @@ class Configuration
     {
         $this->pipes = [];
         foreach ($pipes as $pipe) {
-            if (get_parent_class($pipe) == AbstractPipes::class) {
+            if (get_parent_class($pipe) == AbstractCommand::class) {
                 $this->pipes[] = $pipe;
             }
         }
@@ -105,7 +105,7 @@ class Configuration
      */
     public function setPipe(string $pipe): void
     {
-        if (get_parent_class($pipe) == AbstractPipes::class) {
+        if (get_parent_class($pipe) == AbstractCommand::class) {
             $this->pipes[] = $pipe;
         }
     }

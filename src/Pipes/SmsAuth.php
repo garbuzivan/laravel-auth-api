@@ -10,7 +10,7 @@ use Prozorov\DataVerification\Exceptions\LimitException;
 use Prozorov\DataVerification\Exceptions\VerificationException;
 use Prozorov\DataVerification\Types\Address;
 
-class SmsAuth extends AbstractPipes
+class SmsAuth extends AbstractCommand
 {
     /**
      * Method of processing authorization and obtaining a token
