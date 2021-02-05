@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace GarbuzIvan\LaravelAuthApi;
 
-
 use Illuminate\Pipeline\Pipeline;
 
 class LaravelAuthApi
