@@ -23,7 +23,7 @@ class UserTransport
         }
         $user = User::where($field, $value)->first();
         if (is_null($user)) {
-            $token = Str::random(80);
+            $token = Str::random($config->getTokenLength());
             $user = User::create([$field => $value, 'api_token' => $token]);
         } else {
             return $this->getUserTokenAfterAuth($user, $config);
@@ -44,7 +44,7 @@ class UserTransport
         if (!$config->isNewToken() && !is_null($user->api_token)) {
             return $user->api_token;
         } else {
-            $token = Str::random(80);
+            $token = Str::random($config->getTokenLength());
             User::where('id', $user->id)->update(['api_token' => $token]);
             return $token;
         }
