@@ -32,7 +32,7 @@ class SmsAuth extends AbstractPipes
     public function authBySmsStep1(AuthStatus $auth): AuthStatus
     {
         // If the authorization was successful earlier - skip
-        if($auth->isSuccess()){
+        if ($auth->isSuccess()) {
             return $auth;
         }
         // handler
@@ -60,7 +60,7 @@ class SmsAuth extends AbstractPipes
     public function authBySmsStep2(AuthStatus $auth): AuthStatus
     {
         // If the authorization was successful earlier - skip
-        if($auth->isSuccess()){
+        if ($auth->isSuccess()) {
             return $auth;
         }
         // handler

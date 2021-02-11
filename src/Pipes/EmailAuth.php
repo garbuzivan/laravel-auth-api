@@ -23,7 +23,7 @@ class EmailAuth extends AbstractPipes
     public function auth(AuthStatus $auth): AuthStatus
     {
         $arg = $auth->getArg();
-        if(!isset($arg['password'])){
+        if (!isset($arg['password'])) {
             $auth = $this->authByEmailStep2($auth);
             $auth = $this->authByEmailStep1($auth);
         }
@@ -37,7 +37,7 @@ class EmailAuth extends AbstractPipes
     public function authByEmailStep1(AuthStatus $auth): AuthStatus
     {
         // If the authorization was successful earlier - skip
-        if($auth->isSuccess()){
+        if ($auth->isSuccess()) {
             return $auth;
         }
         // handler
@@ -45,18 +45,18 @@ class EmailAuth extends AbstractPipes
         if (isset($arg['email']) && filter_var($arg['email'], FILTER_VALIDATE_EMAIL)) {
             $arg = $auth->getArg();
             $data = [
-                'email' =>  $arg['email'],
-                'code'  =>  Str::random(40),
-                'pass' =>   Generator::code($auth->config),
-                'use' =>   0,
+                'email' => $arg['email'],
+                'code' => Str::random(40),
+                'pass' => Generator::code($auth->config),
+                'use' => 0,
             ];
             CodeEmail::create($data);
             // event email send
             $message = [
-                'to'    =>  $arg['email'],
-                'title' =>  'Одноразовый код подтверждения',
-                'view'  =>  $auth->config->getViewMail(),
-                'body'  =>  'Ваш код подтверждения, для получения токена: <b>' . $data['pass'] . '</b>',
+                'to' => $arg['email'],
+                'title' => 'Одноразовый код подтверждения',
+                'view' => $auth->config->getViewMail(),
+                'body' => 'Ваш код подтверждения, для получения токена: <b>' . $data['pass'] . '</b>',
             ];
             SendEmailCode::dispatch($message);
 
@@ -76,7 +76,7 @@ class EmailAuth extends AbstractPipes
     public function authByEmailStep2(AuthStatus $auth): AuthStatus
     {
         // If the authorization was successful earlier - skip
-        if($auth->isSuccess()){
+        if ($auth->isSuccess()) {
             return $auth;
         }
         // handler
@@ -87,7 +87,7 @@ class EmailAuth extends AbstractPipes
                 ->where('pass', $arg['pass'])
                 ->where('use', 0)
                 ->first();
-            if(is_null($validCode)){
+            if (is_null($validCode)) {
                 $auth->setError(ExceptionCode::$ERROR_FORBIDDEN_403);
             } else {
                 CodeEmail::where('email', $arg['email'])->delete();
