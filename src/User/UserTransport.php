@@ -41,7 +41,7 @@ class UserTransport
      */
     public function getUserTokenAfterAuth($user, Configuration $config): ?string
     {
-        if(!$config->isNewToken() && !is_null($user->api_token)){
+        if (!$config->isNewToken() && !is_null($user->api_token)) {
             return $user->api_token;
         } else {
             $token = Str::random(80);
