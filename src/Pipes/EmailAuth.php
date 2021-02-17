@@ -36,12 +36,14 @@ class EmailAuth extends AbstractPipes
      */
     public function authByEmailStep1(AuthStatus $auth): AuthStatus
     {
-        // If the authorization was successful earlier - skip
-        if ($auth->isSuccess()) {
-            return $auth;
-        }
         // handler
         $arg = $auth->getArg();
+
+        // If the authorization was successful earlier - skip
+        if (isset($arg['code']) || $auth->isSuccess()) {
+            return $auth;
+        }
+
         if (isset($arg['email']) && filter_var($arg['email'], FILTER_VALIDATE_EMAIL)) {
             $arg = $auth->getArg();
             $data = [
