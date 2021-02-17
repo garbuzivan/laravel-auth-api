@@ -31,12 +31,14 @@ class SmsAuth extends AbstractPipes
      */
     public function authBySmsStep1(AuthStatus $auth): AuthStatus
     {
-        // If the authorization was successful earlier - skip
-        if ($auth->isSuccess()) {
-            return $auth;
-        }
         // handler
         $arg = $auth->getArg();
+
+        // If the authorization was successful earlier - skip
+        if (isset($arg['code']) || $auth->isSuccess()) {
+            return $auth;
+        }
+
         if (isset($arg['phone']) && !is_null($arg['phone'])) {
             $arg = $auth->getArg();
             $manager = app('otp');
