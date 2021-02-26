@@ -38,10 +38,10 @@ class SmsAuth extends AbstractPipes
         if (isset($arg['code']) || $auth->isSuccess()) {
             return $auth;
         }
-        // Validate phone
-        $this->errorValidation($auth);
 
         if (isset($arg['phone']) && !is_null($arg['phone'])) {
+            // Validate phone
+            $this->errorValidation($auth);
             $arg = $auth->getArg();
             $manager = app('otp');
             $address = new Address($arg['phone']);
@@ -67,11 +67,11 @@ class SmsAuth extends AbstractPipes
         if ($auth->isSuccess()) {
             return $auth;
         }
-        // Validate phone
-        $this->errorValidation($auth);
         // handler
         $arg = $auth->getArg();
         if (isset($arg['phone']) && isset($arg['code']) && isset($arg['pass'])) {
+            // Validate phone
+            $this->errorValidation($auth);
             $manager = app('otp');
             try {
                 $manager->verifyOrFail($arg['code'], $arg['pass']);
