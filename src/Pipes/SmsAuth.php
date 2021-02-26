@@ -20,6 +20,7 @@ class SmsAuth extends AbstractPipes
      */
     public function auth(AuthStatus $auth): AuthStatus
     {
+
         $auth = $this->authBySmsStep2($auth);
         $auth = $this->authBySmsStep1($auth);
         return $auth;
@@ -33,11 +34,12 @@ class SmsAuth extends AbstractPipes
     {
         // handler
         $arg = $auth->getArg();
-
         // If the authorization was successful earlier - skip
         if (isset($arg['code']) || $auth->isSuccess()) {
             return $auth;
         }
+        // Validate phone
+        $this->errorValidation($auth);
 
         if (isset($arg['phone']) && !is_null($arg['phone'])) {
             $arg = $auth->getArg();
@@ -65,6 +67,8 @@ class SmsAuth extends AbstractPipes
         if ($auth->isSuccess()) {
             return $auth;
         }
+        // Validate phone
+        $this->errorValidation($auth);
         // handler
         $arg = $auth->getArg();
         if (isset($arg['phone']) && isset($arg['code']) && isset($arg['pass'])) {
@@ -74,9 +78,39 @@ class SmsAuth extends AbstractPipes
             } catch (\OutOfBoundsException|VerificationException|LimitException $e) {
                 $auth->setError($e->getMessage());
             }
-            $token = (new UserTransport)->getUserOrCreate($arg['phone'], 'phone', $auth->config);
+            $token = (new UserTransport)->getUserOrCreate($this->replacePhone($arg['phone']), 'phone', $auth->config);
             $auth->setToken($token);
         }
         return $auth;
+    }
+
+    /**
+     * @param string $phone
+     * @return string
+     */
+    public function replacePhone(string $phone): string
+    {
+        return preg_replace('~[^0-9]~isuU', null, $phone);
+    }
+
+    /**
+     * @param string $phone
+     * @return bool
+     */
+    public function validation(string $phone): bool
+    {
+        return mb_strlen($this->replacePhone($phone)) == 11;
+    }
+
+    /**
+     * @param $auth
+     */
+    public function errorValidation($auth)
+    {
+        $arg = $auth->getArg();
+        $validation = $this->validation($arg['phone']);
+        if(!$validation){
+            $auth->setError('Телефон должен быть в формате 79871234567');
+        }
     }
 }
