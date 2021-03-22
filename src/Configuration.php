@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace GarbuzIvan\LaravelAuthApi;
 
+use App\Admin\Controllers\TestClass;
 use GarbuzIvan\LaravelAuthApi\Pipes\AbstractPipes;
 
 class Configuration
@@ -19,6 +20,13 @@ class Configuration
      * @var array
      */
     protected array $pipes = [];
+
+    /**
+     * The array of class pipes.
+     *
+     * @var array
+     */
+    protected array $plugins = [];
 
     /**
      * Create new token if api token exists in user
@@ -75,6 +83,10 @@ class Configuration
         if (is_array($pipes)) {
             $this->setPipes($pipes);
         }
+        $plugins = config($this->configFile . '.plugins');
+        if (is_array($plugins)) {
+            $this->setPlugins($plugins);
+        }
         $newTokenActive = config($this->configFile . '.new_token_after_auth');
         if (is_bool($newTokenActive)) {
             $this->newTokenActive($newTokenActive);
@@ -127,6 +139,44 @@ class Configuration
     public function getPipes(): array
     {
         return $this->pipes;
+    }
+
+    /**
+     * @param array $plugins
+     */
+    public function setPlugins(array $plugins): void
+    {
+        $this->plugins = [];
+        foreach ($plugins as $plugin) {
+            $this->plugins[] = $plugin;
+        }
+    }
+
+    /**
+     * @param string $plugin
+     */
+    public function setPlugin(string $plugin): void
+    {
+        $this->plugins[] = $plugin;
+    }
+
+    /**
+     * @param string|null $interface
+     * @return array
+     */
+    public function getPlugins(string $interface = null): array
+    {
+        if (is_null($interface)) {
+            return $this->plugins;
+        }
+        $list = [];
+        foreach ($this->plugins as $plugin) {
+            $interfaces = class_implements($plugin);
+            if (isset($interfaces[$interface])) {
+                $list[] = $plugin;
+            }
+        }
+        return $list;
     }
 
     /**

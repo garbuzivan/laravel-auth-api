@@ -10,6 +10,12 @@ return [
         \GarbuzIvan\LaravelAuthApi\Pipes\DefaultAuth::class,
     ],
 
+    // Plugins
+    // PluginCreateUserInterface | PluginAuthInterface | PluginAuthFailInterface
+    'plugins' => [
+        // PluginClassName::class,
+    ],
+
     // Create new token if api token exists in user
     'new_token_after_auth' => true,
 
