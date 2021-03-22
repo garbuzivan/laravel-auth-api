@@ -36,7 +36,9 @@ class LaravelAuthApiServiceProvider extends ServiceProvider
      */
     public function register()
     {
-
+        $this->app->bind('LaravelAuthApi', function () {
+            return new LaravelAuthApi;
+        });
     }
 
     /**
