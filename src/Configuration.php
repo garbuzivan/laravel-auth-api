@@ -242,11 +242,17 @@ class Configuration
         return $this->generatorCodeLength;
     }
 
+    /**
+     * @param string $view
+     */
     public function setViewMail(string $view): void
     {
         $this->viewMail = $view;
     }
 
+    /**
+     * @return string
+     */
     public function getViewMail(): string
     {
         return $this->viewMail;
