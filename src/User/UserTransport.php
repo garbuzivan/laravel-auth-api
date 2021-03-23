@@ -24,12 +24,12 @@ class UserTransport
         }
         $user = User::where($field, $value)->first();
         if (!is_null($user)) {
-            $user = (new Plugin)->authSuccess($user);
+            $user = (new Plugin($config))->authSuccess($user);
             return $this->getUserTokenAfterAuth($user, $config);
         }
         $token = Str::random($config->getTokenLength());
         $user = User::create([$field => $value, 'api_token' => $token]);
-        $user = (new Plugin)->createUser($user);
+        $user = (new Plugin($config))->createUser($user);
         if (is_null($user->name) || mb_strlen(trim($user->name)) == 0) {
             User::where('id', $user->id)->update(['name' => 'ID' . $user->id]);
         }
