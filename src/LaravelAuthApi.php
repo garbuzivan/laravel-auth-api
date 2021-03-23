@@ -37,8 +37,8 @@ class LaravelAuthApi
             ->through($this->config->getPipes())
             ->thenReturn();
 
-        if (!$auth->isSuccess()) {
-            $AuthStatus = (new Plugin)->authFail($AuthStatus);
+        if (!$AuthStatus->isSuccess()) {
+            $AuthStatus = (new Plugin($this->config))->authFail($AuthStatus);
         }
 
         return $AuthStatus;
