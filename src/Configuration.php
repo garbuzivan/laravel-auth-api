@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace GarbuzIvan\LaravelAuthApi;
 
-use App\Admin\Controllers\TestClass;
 use GarbuzIvan\LaravelAuthApi\Pipes\AbstractPipes;
 
 class Configuration

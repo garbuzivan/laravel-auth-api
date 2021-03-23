@@ -6,6 +6,7 @@ namespace GarbuzIvan\LaravelAuthApi\User;
 
 use App\Models\User;
 use GarbuzIvan\LaravelAuthApi\Configuration;
+use GarbuzIvan\LaravelAuthApi\Plugin;
 use Illuminate\Support\Str;
 
 class UserTransport
@@ -22,12 +23,13 @@ class UserTransport
             return null;
         }
         $user = User::where($field, $value)->first();
-        if (is_null($user)) {
-            $token = Str::random($config->getTokenLength());
-            $user = User::create([$field => $value, 'api_token' => $token]);
-        } else {
+        if (!is_null($user)) {
+            $user = (new Plugin)->authSuccess($user);
             return $this->getUserTokenAfterAuth($user, $config);
         }
+        $token = Str::random($config->getTokenLength());
+        $user = User::create([$field => $value, 'api_token' => $token]);
+        $user = (new Plugin)->createUser($user);
         if (is_null($user->name) || mb_strlen(trim($user->name)) == 0) {
             User::where('id', $user->id)->update(['name' => 'ID' . $user->id]);
         }
@@ -43,10 +45,9 @@ class UserTransport
     {
         if (!$config->isNewToken() && !is_null($user->api_token)) {
             return $user->api_token;
-        } else {
-            $token = Str::random($config->getTokenLength());
-            User::where('id', $user->id)->update(['api_token' => $token]);
-            return $token;
         }
+        $token = Str::random($config->getTokenLength());
+        User::where('id', $user->id)->update(['api_token' => $token]);
+        return $token;
     }
 }

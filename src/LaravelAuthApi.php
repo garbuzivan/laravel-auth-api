@@ -31,11 +31,17 @@ class LaravelAuthApi
     public function auth(array $auth = null): AuthStatus
     {
         $AuthStatus = new AuthStatus($auth, $this->config);
-        return app(Pipeline::class)
+        app(Pipeline::class)
             ->send($AuthStatus)
             ->via('handler')
             ->through($this->config->getPipes())
             ->thenReturn();
+
+        if (!$auth->isSuccess()) {
+            $AuthStatus = (new Plugin)->authFail($AuthStatus);
+        }
+
+        return $AuthStatus;
     }
 
 }
